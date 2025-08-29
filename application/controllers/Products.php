@@ -8,7 +8,15 @@ class Products extends CI_Controller {
     }
 
     public function index() {
-        $data['products'] = $this->Product_model->get_all();
+        $q = $this->input->get('q');
+        $min_price = $this->input->get('min_price');
+        $max_price = $this->input->get('max_price');
+
+        $data['products'] = $this->Product_model->search($q, $min_price, $max_price);
+        $data['q'] = $q;
+        $data['min_price'] = $min_price;
+        $data['max_price'] = $max_price;
+
         $this->load->view('products/list', $data);
     }
 }
